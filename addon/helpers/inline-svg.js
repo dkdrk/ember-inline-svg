@@ -5,7 +5,9 @@ import {
   applyClass
 } from 'ember-inline-svg/utils/general';
 
-export function inlineSvg(svgs, path, options) {
+SVGs = Ember.SVGs;
+
+function inlineSvg(svgs, path, options) {
   var jsonPath = dottify(path);
   var svg = Ember.get(svgs, jsonPath);
 
@@ -20,4 +22,18 @@ export function inlineSvg(svgs, path, options) {
   svg = applyClass(svg, options.class);
 
   return Ember.String.htmlSafe(svg);
+};
+
+let helper;
+if (Ember.Helper && Ember.Helper.helper) {
+  helper = Ember.Helper.helper(function([path], options) {
+    return inlineSvg(SVGs, path, options);
+  });
+} else {
+  helper = Ember.Handlebars.makeBoundHelper(function(path, options) {
+    return inlineSvg(SVGs, path, options.hash || {});
+  });
 }
+
+export default helper;
+
