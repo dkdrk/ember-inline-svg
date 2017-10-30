@@ -61,7 +61,7 @@ module.exports = {
     var manifest = flatiron(optimized, {
       outputFile: 'assets/svgs.js',
       trimExtensions: true,
-      variableName: 'Ember.SVGs = '
+      prefix: 'APP_SVGs = '
     });
   
     return manifest;
